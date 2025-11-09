@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Mr.π Capture",
+  "version": "1.0.0",
+  "description": "一键保存网页信息到 Mr.π AI Studio",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "Mr.π Capture"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://api.mrpi.ai/*",
+    "http://localhost:3000/*"
+  ],
+  "options_page": "options.html"
+}

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mr.π Capture</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 380px;
+      min-height: 400px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 14px;
+      color: #333;
+      background: #f9fafb;
+      padding: 0;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 16px 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .header h1 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .header p {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: #555;
+    }
+
+    input[type="text"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input[type="text"]:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    input[type="text"]:read-only {
+      background-color: #f3f4f6;
+      cursor: not-allowed;
+      color: #6b7280;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .message {
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      margin-bottom: 16px;
+      display: none;
+    }
+
+    .message.success {
+      background-color: #d1fae5;
+      color: #065f46;
+      border: 1px solid #6ee7b7;
+    }
+
+    .message.error {
+      background-color: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fca5a5;
+    }
+
+    .message.info {
+      background-color: #dbeafe;
+      color: #1e40af;
+      border: 1px solid #93c5fd;
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    .footer {
+      padding: 12px 20px;
+      background: #fff;
+      border-top: 1px solid #e5e7eb;
+      text-align: center;
+    }
+
+    .footer a {
+      color: #667eea;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    .tag-info {
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🎯 Mr.π Capture</h1>
+    <p>保存当前网页到您的 AI Studio</p>
+  </div>
+
+  <div class="container">
+    <div id="message" class="message"></div>
+
+    <form id="captureForm">
+      <div class="form-group">
+        <label for="title">页面标题</label>
+        <input type="text" id="title" name="title" placeholder="请输入标题" required>
+      </div>
+
+      <div class="form-group">
+        <label for="url">页面地址</label>
+        <input type="text" id="url" name="url" readonly>
+      </div>
+
+      <div class="form-group">
+        <label for="note">备注说明</label>
+        <textarea id="note" name="note" placeholder="添加您的备注或想法..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="tag">分类标签</label>
+        <select id="tag" name="tag" required>
+          <option value="">-- 请选择标签 --</option>
+          <option value="Product">Product (产品)</option>
+          <option value="Competitor">Competitor (竞品)</option>
+          <option value="Content">Content (内容)</option>
+          <option value="Inspiration">Inspiration (灵感)</option>
+        </select>
+        <div class="tag-info">选择最符合此页面的分类标签</div>
+      </div>
+
+      <button type="submit" id="saveBtn" class="btn btn-primary">
+        💾 保存到 Mr.π
+      </button>
+    </form>
+  </div>
+
+  <div class="footer">
+    <a href="#" id="settingsLink">⚙️ 配置 API Token</a>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
